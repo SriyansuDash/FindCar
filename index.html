@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carshow</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="darkmode">
+    <header>
+        <button id="themeChange">
+            <img src="dark_mode.svg" alt="dark_mode" class="dark_mode">
+            <h3>Change Theme</h3>
+            <img src="light_mode.svg" alt="light_mode" class="light_mode">
+        </button>
+        <nav class="navbar">
+            <div class="imgLogo">
+                <img src="logo.png" alt="imgLogo">
+                <h3 class="text">FindCars</h3>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu" id="menu">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="first-container">
+                <div class="first-text">
+                    <h2>Welcome to </h2>
+                    <h1>FindCars</h1>
+                    <p>Find your right <span>DESIRED</span> car</span></p>
+                    <input type="search" name="SearchBar" id="search" placeholder="Search hear">
+                    <p id="information">Hit 'ENTER' to search on <span><img src="google.png" alt="googleImage" height="30px"></span></p>
+                </div>
+                <div class="thumbnail-container">
+                    <div class="first-image car1">
+                        <img src="bmw.jpg" alt="BMW" id="thumb-bmw">
+                    </div>
+                    <div class="first-image car2">
+                        <img src="porche.jpg" alt="Porsche" id="thumb-porsche">
+                    </div>
+                    <div class="first-image car3">
+                        <img src="dodge.jpg" alt="Dodge" id="thumb-dodge">
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-car">
+                <img src="bmw.jpg" alt="Preview of a BMW" class="active-preview">
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const hamburger = document.getElementById("hamburger");
+        const menu = document.getElementById("menu");
+
+        hamburger.addEventListener("click", () => {
+            menu.classList.toggle("show");
+        });
+
+        //Adding DarkMode
+        let darkmode = localStorage.getItem("darkmode");
+        const themeChange = document.getElementById("themeChange");
+
+        themeChange.addEventListener("click", () => {
+            if (darkmode === "enabled") {
+                document.body.classList.remove("darkmode");
+                darkmode = "disabled";
+                localStorage.setItem("darkmode", "disabled");
+            }
+            else {
+                document.body.classList.add("darkmode");
+                darkmode = "enabled";
+                localStorage.setItem("darkmode", "enabled");
+            }
+        });
+
+        const thumbnails = document.querySelectorAll(".first-image img");
+        const previewImage = document.querySelector(".preview-car img");
+
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener("click", () => {
+                document.querySelector(".active-thumb")?.classList.remove("active-thumb");
+                thumb.classList.add("active-thumb");
+                previewImage.src = thumb.src;
+            });
+        });
+        document.getElementById('thumb-bmw').classList.add('active-thumb');
+        //Adding search
+        const searchInput = document.getElementById('search');
+        searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    window.location.href = googleSearchUrl;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
